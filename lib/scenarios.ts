@@ -29,7 +29,7 @@ export const SCENARIOS: Scenario[] = [
     level: "Beginner",
     description:
       "Practice greeting staff, asking about the menu, and placing an order at a casual Japanese restaurant.",
-    backgroundImage: "/scenarios/restaurant.jpg",
+    backgroundImage: "/scenarios/restaurant.webp",
     characters: [
       { avatarId: "restaurant_1", fallbackLabel: "Friendly Waiter" },
       { avatarId: "restaurant_2", fallbackLabel: "Friendly Waitress" },
@@ -44,7 +44,7 @@ export const SCENARIOS: Scenario[] = [
     level: "Beginner",
     description:
       "You are unfamiliar with the area. Practice asking someone for help, getting directions, and understanding their reply.",
-      backgroundImage: "/scenarios/directions.jpg",
+      backgroundImage: "/scenarios/directions.webp",
     characters: [
       { avatarId: "pedestrian_1", fallbackLabel: "Student Passerby" },
       { avatarId: "pedestrian_2", fallbackLabel: "Local Shopkeeper" },
@@ -58,7 +58,7 @@ export const SCENARIOS: Scenario[] = [
     level: "Beginner",
     description:
      "Practice a quick market interaction: paying for your items, getting bags, and answering basic questions at the counter.",
-      backgroundImage: "/scenarios/store.jpg",
+      backgroundImage: "/scenarios/store.webp",
     characters: [
       { avatarId: "shopping_1", fallbackLabel: "Daytime Clerk" },
       { avatarId: "shopping_2", fallbackLabel: "Night-shift Clerk" },
@@ -72,7 +72,7 @@ export const SCENARIOS: Scenario[] = [
     level: "Intermediate",
     description:
       "Practice a basic first-round job interview: introduce yourself, explain your strengths, talk about your previous experience, and answer simple follow-up questions.",
-      backgroundImage: "/scenarios/interview.jpg",
+      backgroundImage: "/scenarios/interview.webp",
     characters: [
       { avatarId: "interviewer_hr", fallbackLabel: "HR Interviewer" },
       { avatarId: "interviewer_manager", fallbackLabel: "Hiring Manager" },
@@ -86,7 +86,7 @@ export const SCENARIOS: Scenario[] = [
     level: "Intermediate",
     description:
       "Practice contacting a healthcare provider to schedule a visit, explaining your current symptoms, and confirming an available time slot.",
-    backgroundImage: "/scenarios/medical.jpg",
+    backgroundImage: "/scenarios/medical.webp",
     characters: [
       { avatarId: "clinic_receptionist", fallbackLabel: "Receptionist" },
       { avatarId: "clinic_nurse", fallbackLabel: "Triage Nurse" },
@@ -100,7 +100,7 @@ export const SCENARIOS: Scenario[] = [
     level: "Advanced",
     description:
       "No menu, no form — just a stranger nearby and an opening you have to create yourself. Practice reading the room, starting small talk, and keeping it going with no script to fall back on.",
-    backgroundImage: "/scenarios/conversation.jpg",
+    backgroundImage: "/scenarios/conversation.webp",
     characters: [
       { avatarId: "stranger_commuter", fallbackLabel: "Fellow Commuter" },
       { avatarId: "stranger_cafe_patron", fallbackLabel: "Café Patron" },

@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Scenario } from "@/lib/scenarios";
 import { AVATAR_SCRIPT_URL, BACKEND_URL, APP_ID } from "@/lib/config";
 import ChatHistoryOverlay from "./ChatHistoryOverlay";
+import Image from "next/image";
 
 const SCRIPT_ID = "ai-avatar-ui-script";
 
@@ -174,9 +175,13 @@ export default function AvatarComponents({
         }}
       />
 
-      <div
-        className="fixed inset-0 -z-20 bg-cover bg-bottom bg-no-repeat"
-        style={{ backgroundImage: `url(${scenario.backgroundImage})` }}
+      <Image
+        src={scenario.backgroundImage}
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="fixed inset-0 -z-20 object-cover object-bottom"
       />
       <div className="fixed inset-0 -z-10 bg-black/25" />
 

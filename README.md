@@ -7,7 +7,22 @@ interactive 3D AI avatar. No login or accounts required.
 
 ## 🚀 Live Demo
 
-**[Check out the live demo →]()**
+**[Check out the live demo →](https://ai-dojo-prototype-ghost.vercel.app/)**
+
+## Screenshots
+
+<p align="center">
+  <img src="public/screenshots/Screenshot1.png" width="48%" alt="Homepage" />
+  <img src="public/screenshots/Screenshot2.png" width="48%" alt="Character Select Screen" />
+</p>
+<p align="center">
+  <img src="public/screenshots/Screenshot3.png" width="48%" alt="Chat History" />
+  <img src="public/screenshots/Screenshot4.png" width="48%" alt="Avatar screen 1" />
+</p>
+<p align="center">
+  <img src="public/screenshots/Screenshot5.png" width="48%" alt="Avatar screen 2" />
+  <img src="public/screenshots/Screenshot6.png" width="48%" alt="Avatar screen 3" />
+</p>
 
 ## What This Demonstrates
 
@@ -140,8 +155,8 @@ app/
   practice/
     [scenarioId]/
       page.tsx                  # Character select screen for a scenario
-      [avatarId]/                # (not included in this upload — the practice
-        page.tsx                #  session screen that renders AvatarComponents)
+      [characterId]/
+        page.tsx                # Practice session screen — renders AvatarComponents
   globals.css                   # Tailwind v4 theme tokens + dark mode variant
 components/
   Navbar.tsx                    # Logo, theme toggle
@@ -157,27 +172,6 @@ lib/
 types/
   avatar-elements.d.ts          # JSX.IntrinsicElements declarations for the custom elements (avatar-model, avatar-status, avatar-captions, avatar-settings, avatar-inputs), so TSX can use them with typed props
 ```
-
-> The `[avatarId]/page.tsx` practice-session route isn't among the files
-> shared with me — I've inferred it exists (it's what would render
-> `AvatarComponents`) based on standard Next.js App Router conventions and
-> the `href="/practice/${scenarioId}/${avatarId}"` link in
-> `CharacterCard.tsx`. Let me know if the actual path differs.
-
-## Screenshots
-
-<p align="center">
-  <img src="public/screenshots/Screenshot1.png" width="48%" alt="Homepage" />
-  <img src="public/screenshots/Screenshot2.png" width="48%" alt="Character Select Screen" />
-</p>
-<p align="center">
-  <img src="public/screenshots/Screenshot3.png" width="48%" alt="Chat History" />
-  <img src="public/screenshots/Screenshot4.png" width="48%" alt="Avatar screen 1" />
-</p>
-<p align="center">
-  <img src="public/screenshots/Screenshot5.png" width="48%" alt="Avatar screen 2" />
-  <img src="public/screenshots/Screenshot6.png" width="48%" alt="Avatar screen 3" />
-</p>
 
 ## Setup & Running Locally
 

@@ -59,25 +59,6 @@ export default function AvatarComponents({
     };
   }, []);
 
-  // Simplified fetch block: executes silently in the background without blocking the UI or raising alerts
-  useEffect(() => {
-    fetch(`${BACKEND_URL}/settings`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-app-id": appId,
-        "x-settings-scope": "app",
-        "x-settings-group": settingsGroup,
-      },
-      body: JSON.stringify({
-        persona_overrides: {
-          name: scenario.title,
-        },
-      }),
-    }).catch(() => {
-      // Fails silently in the background if network stutters so the user is never interrupted
-    });
-  }, [scenario, avatarId, instance, appId, settingsGroup]);
 
   useEffect(() => {
     // Fresh attempt (first mount, or a retry bump) — always start from a

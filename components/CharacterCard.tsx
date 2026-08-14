@@ -33,12 +33,9 @@ export default function CharacterCard({
 
   // Detect if we are actively fetching live details from the database
   // OR waiting on the web component's own ready signal.
-  const isSyncingData =
-    status === "loading" ||
-    !profile ||
-    !profile.name ||
-    !profile.persona ||
-    !isAppReady;
+const isSyncingData =
+  status === "loading" &&
+  (!profile || !profile.name || !profile.persona || !isAppReady);
 
   const displayName = profile?.name ?? fallbackLabel;
   const displayPersona = profile?.persona ?? persona;

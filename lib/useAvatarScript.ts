@@ -46,17 +46,29 @@ export function loadAvatarScript(): Promise<void> {
       SCRIPT_ID
     ) as HTMLScriptElement | null;
     if (existing) {
-      // A tag exists already — from a previous call in this same session.
-      // Since scriptLoadPromise is a module-level singleton, this branch
-      // only runs if something else created the tag outside this module
-      // (shouldn't normally happen). Attach to its load/error rather than
-      // assuming it's already done.
-      existing.addEventListener("load", () => resolve(), { once: true });
-      existing.addEventListener(
-        "error",
-        () => reject(new Error("avatar script failed to load")),
-        { once: true }
-      );
+      // A tag exists already — from a previous call in this same session,
+      // or from something outside this module creating it directly (this
+      // used to happen: AvatarComponents.tsx had its own independent
+      // script-creation code with the same id, which caused a real bug —
+      // see HANDOFF3.md). Its "load" event may have already fired before
+      // we got here, and DOM events don't replay for late listeners, so we
+      // can't rely on the event alone. customElements.whenDefined()
+      // resolves immediately if the module already ran, so race it against
+      // the load/error listeners to cover both "still loading" and
+      // "already finished" cases.
+      Promise.race([
+        customElements.whenDefined("avatar-model"),
+        new Promise<void>((res, rej) => {
+          existing.addEventListener("load", () => res(), { once: true });
+          existing.addEventListener(
+            "error",
+            () => rej(new Error("avatar script failed to load")),
+            { once: true }
+          );
+        }),
+      ])
+        .then(() => resolve())
+        .catch(reject);
       return;
     }
 

@@ -3,11 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { Scenario } from "@/lib/scenarios";
-import { AVATAR_SCRIPT_URL, BACKEND_URL, APP_ID } from "@/lib/config";
+import { BACKEND_URL, APP_ID } from "@/lib/config";
+import { loadAvatarScript } from "@/lib/useAvatarScript";
 import ChatHistoryOverlay from "./ChatHistoryOverlay";
 import Image from "next/image";
-
-const SCRIPT_ID = "ai-avatar-ui-script";
 
 export default function AvatarComponents({
   scenario,
@@ -34,30 +33,30 @@ export default function AvatarComponents({
   const shellRef = useRef<HTMLDivElement | null>(null);
 
   // Load the AI Avatar Team's Web Component bundle once, then nudge it.
+  // Routed through the shared loadAvatarScript() singleton (lib/useAvatarScript.ts)
+  // instead of creating/checking the <script> tag independently here. This
+  // component used to have its own copy of this logic, which raced against
+  // useAvatarProfile.ts's copy on the character-select page after a reload —
+  // whichever one ran second could attach its "load" listener after the tag
+  // had already finished loading and never resolve. See HANDOFF3.md.
   useEffect(() => {
+    let cancelled = false;
     function nudgeResize() {
       window.dispatchEvent(new Event("resize"));
     }
-
-    if (document.getElementById(SCRIPT_ID)) {
-      const t1 = setTimeout(nudgeResize, 50);
-      const t2 = setTimeout(nudgeResize, 400);
-      return () => {
-        clearTimeout(t1);
-        clearTimeout(t2);
-      };
-    }
-
-    const script = document.createElement("script");
-    script.id = SCRIPT_ID;
-    script.type = "module";
-    script.src = AVATAR_SCRIPT_URL;
-    script.async = true;
-    script.onload = () => {
-      setTimeout(nudgeResize, 50);
-      setTimeout(nudgeResize, 400);
+    loadAvatarScript()
+      .then(() => {
+        if (cancelled) return;
+        setTimeout(nudgeResize, 50);
+        setTimeout(nudgeResize, 400);
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error("[AvatarComponents] failed to load avatar script:", error);
+      });
+    return () => {
+      cancelled = true;
     };
-    document.body.appendChild(script);
   }, []);
 
   // Simplified fetch block: executes silently in the background without blocking the UI or raising alerts

@@ -342,7 +342,7 @@ export default function AvatarComponents({
 
               <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-full max-w-2xl px-3 flex flex-col">
                 <avatar-captions instance={instance} />
-                <avatar-inputs instance={instance} className="shadow-2xl" />
+                <avatar-inputs instance={instance} backend={BACKEND_URL} className="shadow-2xl" />
               </div>
             </div>
           </div>

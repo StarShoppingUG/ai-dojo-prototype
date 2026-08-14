@@ -12,16 +12,16 @@ interactive 3D AI avatar. No login or accounts required.
 ## Screenshots
 
 <p align="center">
-  <img src="public/screenshots/Screenshot1.png" width="48%" alt="Homepage" />
-  <img src="public/screenshots/Screenshot2.png" width="48%" alt="Character Select Screen" />
+  <img src="public/screenshots/Screenshot1.webp" width="48%" alt="Homepage" />
+  <img src="public/screenshots/Screenshot2.webp" width="48%" alt="Character Select Screen" />
 </p>
 <p align="center">
-  <img src="public/screenshots/Screenshot3.png" width="48%" alt="Chat History" />
-  <img src="public/screenshots/Screenshot4.png" width="48%" alt="Avatar screen 1" />
+  <img src="public/screenshots/Screenshot3.webp" width="48%" alt="Chat History" />
+  <img src="public/screenshots/Screenshot4.webp" width="48%" alt="Avatar screen 1" />
 </p>
 <p align="center">
-  <img src="public/screenshots/Screenshot5.png" width="48%" alt="Avatar screen 2" />
-  <img src="public/screenshots/Screenshot6.png" width="48%" alt="Avatar screen 3" />
+  <img src="public/screenshots/Screenshot5.webp" width="48%" alt="Avatar screen 2" />
+  <img src="public/screenshots/Screenshot6.webp" width="48%" alt="Avatar screen 3" />
 </p>
 
 ## What This Demonstrates

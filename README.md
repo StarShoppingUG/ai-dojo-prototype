@@ -29,15 +29,9 @@ interactive 3D AI avatar. No login or accounts required.
 This prototype is an integration blueprint, not a product — it shows how
 to embed and drive [`ai-avatar-ui`](https://github.com/StarShoppingUG/ai-avatar-ui)'s
 custom elements from a Next.js app backed by any server implementing its
-API contract:
-
-- `<avatar-model>` — the 3D canvas, animation, and lip-sync
-- `<avatar-status>` — status pill (thinking / listening / ready / offline)
-- `<avatar-captions>` — on-screen subtitles
-- `<avatar-inputs>` — text box, send button, and mic input
-- `<avatar-settings>` — persona/voice/history config panel (rendered but
-  hidden here unless `NEXT_PUBLIC_SHOW_DEV_CONTROLS=true` — see
-  [Environment Variables](#environment-variables))
+API contract. `<avatar-settings>` (persona/voice/history config) is
+rendered but hidden here unless `NEXT_PUBLIC_SHOW_DEV_CONTROLS=true` — see
+[Environment Variables](#environment-variables).
 
 ## Features
 
@@ -45,9 +39,8 @@ API contract:
   `window`-level `avatar:*` CustomEvents in both directions (see
   [Events](#events-this-app-listens-for--dispatches) below).
 - **Load-state UX** — a full-screen overlay stays up until the avatar
-  reports genuine readiness (not just "init finished running"), with a
-  distinct failure state and a retry button that remounts the avatar
-  subtree cleanly.
+  reports genuine readiness, with a distinct failure state and a retry
+  button. See [Load & Retry UX](#load--retry-ux).
 - **Per-character chat history drawer** — a custom overlay (independent
   of the library's own built-in history panel) that requests, renders,
   and clears the *current character's* conversation.
@@ -67,20 +60,12 @@ instance       = dojo-<scenarioId>-<avatarId>
 settings-group = <scenarioId>-<avatarId>
 ```
 
-When a practice session mounts, `AvatarComponents.tsx` POSTs the
-scenario's persona to the backend's `/settings` endpoint with:
-
-```
-x-app-id:           <APP_ID>          (see lib/config.ts)
-x-settings-scope:   app
-x-settings-group:   dojo-<scenarioId>-<avatarId>
-```
-
-`settings-scope: app` means the persona override is shared across every
-end-user hitting that settings group, rather than isolated per browser —
-appropriate here since this prototype has no accounts. This request is
-fire-and-forget: it fails silently in the background so a network stutter
-never blocks or interrupts the UI.
+`settings-scope: app` means a character's persona override is shared
+across every end-user hitting that settings group, rather than isolated
+per browser — appropriate here since this prototype has no accounts. All
+persona reads and writes for a character (edit, reset, initial load) go
+through this same `app_id` + `settings-group` pair, via `CharacterBrain.js`'s
+`getSettings()`/`saveSettings()`.
 
 ### Events this app listens for / dispatches
 
@@ -94,38 +79,23 @@ never blocks or interrupts the UI.
 | `avatar:open-chat-history` | dispatch | `ChatHistoryOverlay.tsx` | Requests a fresh snapshot when the drawer opens |
 | `avatar:clear-chat-history` | dispatch | `ChatHistoryOverlay.tsx` | Clears the current character's history |
 
-> **Heads up:** `avatar:app:load-error` and `avatar:request-current-profile`
-> don't appear in the `ai-avatar-ui` README's documented event table (which
-> lists `avatar:load-error` and `avatar:app:loading`/`avatar:app:ready` for
-> the equivalent load-state signals, and doesn't mention a
-> request-current-profile event at all). This app's code clearly relies on
-> them working as named, so they may just be undocumented/internal events —
-> worth confirming against the actual library source if you're debugging a
-> profile or load-error issue that doesn't seem to fire.
-
 ### Load & Retry UX
 
 `AvatarComponents.tsx` keeps a full-screen overlay up until either
 `avatar:app:ready` fires for this instance, or a 300ms poll finds
 `avatar-model.currentAvatarModel` already set. A 6-second timeout is a
-last-resort bailout in case neither signal ever arrives (e.g. against an
-older widget build). On `avatar:app:load-error`, the overlay switches to
-a "Couldn't load the dojo" state with a **Try again** button, which bumps
-a `retryKey` to force a full remount of the avatar subtree.
+last-resort bailout in case neither signal ever arrives. On
+`avatar:app:load-error`, the overlay switches to a "Couldn't load the
+dojo" state with a **Try again** button, which bumps a `retryKey` to
+force a full remount of the avatar subtree.
 
 ### Chat History Drawer
 
 The drawer in `ChatHistoryOverlay.tsx` is a custom UI, separate from
-`<avatar-settings>`'s own built-in history panel. A couple of things to
-know:
-
-- It scopes to the **current character only** — dispatching
-  `avatar:open-chat-history`/`avatar:clear-chat-history` with the active
-  `instance` in the event detail.
-- If `<avatar-settings>` is also mounted on the same page (it is, behind
-  the dev-controls flag), dispatching `avatar:open-chat-history` will
-  *also* trigger its own built-in history overlay's listener — so both
-  can pop open at once if dev controls are enabled.
+`<avatar-settings>`'s own built-in history panel. It scopes to the
+**current character only** — dispatching `avatar:open-chat-history`/
+`avatar:clear-chat-history` with the active `instance` in the event
+detail.
 
 ### TypeScript Support
 

@@ -32,7 +32,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4 pt-7 pb-16">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4 pt-7 pb-6">
             {SCENARIOS.map((s) => (
               <Link
                 key={s.id}

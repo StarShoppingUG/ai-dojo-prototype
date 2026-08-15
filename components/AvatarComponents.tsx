@@ -116,14 +116,10 @@ export default function AvatarComponents({
         window.clearInterval(pollId);
       }
     }, 300);
-    // Last-resort bailout so the UI isn't stuck forever if neither
-    // app:ready nor app:load-error ever arrives (e.g. an older widget
-    // build that predates the load-error event). This still risks
-    // revealing onto a blank canvas in that specific case — the real
-    // fix is the app:load-error signal above; this is just a floor.
+
     const pollTimeout = window.setTimeout(() => {
       window.clearInterval(pollId);
-      setIsWidgetReady(true);
+      reveal();
     }, 6000);
 
     return () => {

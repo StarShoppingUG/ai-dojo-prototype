@@ -24,7 +24,7 @@ export default function CharactersScreen({ scenario }: { scenario: Scenario }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4 pt-2 pb-16">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4 pt-2 pb-6">
         {/* 
           CRITICAL STEP: Changed (c) to (c, index) 
           This grabs the item's loop position (0, 1, 2) dynamically.

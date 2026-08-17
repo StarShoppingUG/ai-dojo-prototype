@@ -54,8 +54,16 @@ export default function AvatarComponents({
         // eslint-disable-next-line no-console
         console.error("[AvatarComponents] failed to load avatar script:", error);
       });
+
+    // Catches the mobile toolbar-settle race independent of avatar
+    // script load timing — forces next/image to re-evaluate `sizes`
+    // and the dvh-based containers to re-measure against the real
+    // viewport shortly after first paint.
+    const settleTimer = setTimeout(nudgeResize, 600);
+
     return () => {
       cancelled = true;
+      clearTimeout(settleTimer);
     };
   }, []);
 
@@ -156,12 +164,13 @@ export default function AvatarComponents({
         alt=""
         fill
         priority
+        quality={90}
         sizes="100vw"
-        className="fixed inset-0 -z-20 object-cover object-bottom"
+        className="fixed inset-0 -z-20 h-dvh object-cover object-bottom"
       />
-      <div className="fixed inset-0 -z-10 bg-black/25" />
+      <div className="fixed inset-0 -z-10 h-dvh bg-black/25" />
 
-      <div className="fixed inset-0 z-0 flex flex-col overflow-hidden">
+      <div className="fixed inset-0 z-0 h-dvh flex flex-col overflow-hidden">
         <div className="flex-1 min-h-0 flex relative">
           {/* Overlay stays visible until the model reports ready OR a
               distinct failure state, instead of unconditionally

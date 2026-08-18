@@ -18,7 +18,11 @@ export type Scenario = {
   level: "Beginner" | "Intermediate" | "Advanced";
   description: string;
   backgroundImage: string;
-  characters: [ScenarioCharacterSlot, ScenarioCharacterSlot, ScenarioCharacterSlot];
+  characters: [
+    ScenarioCharacterSlot,
+    ScenarioCharacterSlot,
+    ScenarioCharacterSlot,
+  ];
 };
 
 export const SCENARIOS: Scenario[] = [
@@ -34,7 +38,6 @@ export const SCENARIOS: Scenario[] = [
       { avatarId: "restaurant_1", fallbackLabel: "Friendly Waiter" },
       { avatarId: "restaurant_2", fallbackLabel: "Friendly Waitress" },
       { avatarId: "restaurant_3", fallbackLabel: "Welcoming Agent" },
-      
     ],
   },
   {
@@ -44,7 +47,7 @@ export const SCENARIOS: Scenario[] = [
     level: "Beginner",
     description:
       "You are unfamiliar with the area. Practice asking someone for help, getting directions, and understanding their reply.",
-      backgroundImage: "/scenarios/directions.webp",
+    backgroundImage: "/scenarios/directions.webp",
     characters: [
       { avatarId: "pedestrian_1", fallbackLabel: "Student Passerby" },
       { avatarId: "pedestrian_2", fallbackLabel: "Local Shopkeeper" },
@@ -57,8 +60,8 @@ export const SCENARIOS: Scenario[] = [
     titleJa: "「市場での買い物」",
     level: "Beginner",
     description:
-     "Practice a quick market interaction: paying for your items, getting bags, and answering basic questions at the counter.",
-      backgroundImage: "/scenarios/store.webp",
+      "Practice a quick market interaction: paying for your items, getting bags, and answering basic questions at the counter.",
+    backgroundImage: "/scenarios/store.webp",
     characters: [
       { avatarId: "shopping_1", fallbackLabel: "Daytime Clerk" },
       { avatarId: "shopping_2", fallbackLabel: "Night-shift Clerk" },
@@ -72,7 +75,7 @@ export const SCENARIOS: Scenario[] = [
     level: "Intermediate",
     description:
       "Practice a basic first-round job interview: introduce yourself, explain your strengths, talk about your previous experience, and answer simple follow-up questions.",
-      backgroundImage: "/scenarios/interview.webp",
+    backgroundImage: "/scenarios/interview.webp",
     characters: [
       { avatarId: "interviewer_hr", fallbackLabel: "HR Interviewer" },
       { avatarId: "interviewer_manager", fallbackLabel: "Hiring Manager" },
@@ -91,6 +94,51 @@ export const SCENARIOS: Scenario[] = [
       { avatarId: "clinic_receptionist", fallbackLabel: "Receptionist" },
       { avatarId: "clinic_nurse", fallbackLabel: "Triage Nurse" },
       { avatarId: "medical_assistant", fallbackLabel: "Medical Assistant" },
+    ],
+  },
+  {
+    id: "taxi-rideshare",
+    title: "Talking with a Taxi or Cab driver",
+    titleJa: "タクシーの運転手との会話",
+    level: "Intermediate",
+    description:
+      "Practice giving directions, making small talk during the ride, and asking the driver about the area.",
+    backgroundImage: "/scenarios/taxi.webp",
+    characters: [
+      { avatarId: "taxi_driver", fallbackLabel: "Taxi Driver" },
+      { avatarId: "rideshare_driver", fallbackLabel: "GO Driver" },
+      { avatarId: "airport_shuttle_driver", fallbackLabel: "Shuttle Driver" },
+    ],
+  },
+  {
+    id: "friend-disagreement",
+    title: "Talking through a disagreement with a friend",
+    titleJa: "友人との意見の食い違いを話し合う",
+    level: "Advanced",
+    description:
+      "Practice bringing up something that's been bothering you, listening to your friend's side, and working things out together.",
+    backgroundImage: "/scenarios/disagreement.webp",
+    characters: [
+      { avatarId: "friend_close", fallbackLabel: "Close Friend" },
+      { avatarId: "friend_roommate", fallbackLabel: "Roommate" },
+      { avatarId: "friend_coworker", fallbackLabel: "Coworker Friend" },
+    ],
+  },
+  {
+    id: "billing-dispute",
+    title: "Talking to customer service about a mistake",
+    titleJa: "カスタマーサービスへの問い合わせ",
+    level: "Advanced",
+    description:
+      "Practice calmly explaining a mistake on your bill, asking for it to be fixed, and following up if the first answer doesn't solve it.",
+    backgroundImage: "/scenarios/dispute.webp",
+    characters: [
+      {
+        avatarId: "dispute_service_rep",
+        fallbackLabel: "Customer Service Rep",
+      },
+      { avatarId: "dispute_store_manager", fallbackLabel: "Store Manager" },
+      { avatarId: "dispute_billing_agent", fallbackLabel: "Billing Agent" },
     ],
   },
   {
@@ -115,7 +163,7 @@ export function getScenario(id: string): Scenario | undefined {
 
 export function getScenarioCharacter(
   scenarioId: string,
-  avatarId: string
+  avatarId: string,
 ): ScenarioCharacterSlot | undefined {
   const scenario = getScenario(scenarioId);
   return scenario?.characters.find((c) => c.avatarId === avatarId);

@@ -143,12 +143,7 @@ export default function ChatHistoryOverlay({
     }, TIMEOUT_MS);
   };
 
-  // Mirrors AvatarSettings.js's renderHistory()/appendHistoryItem(): pick
-  // text_en/text_ja by responseLanguage rather than the generic
-  // content/text field (that field is what was silently showing English
-  // for Japanese-mode replies — text_en/text_ja are what the backend
-  // actually stores per-language on every assistant turn). In "both" mode,
-  // an assistant reply renders as two separate bubbles, same as native.
+
   type DisplayBubble = { key: string; isUser: boolean; body: string; time: string };
 
   const showEn = responseLanguage === "en" || responseLanguage === "both";
@@ -176,7 +171,7 @@ export default function ChatHistoryOverlay({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/50 backdrop-blur-sm px-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4"
       onClick={onClose}
     >
       <div
@@ -240,7 +235,7 @@ export default function ChatHistoryOverlay({
               <div
                 className={`max-w-[85%] rounded-card px-4 py-2.5 text-sm leading-relaxed ${
                   b.isUser
-                    ? "bg-ai-indigo text-white"
+                    ? "bg-ai-indigo dark:bg-[#2c4a73] text-white"
                     : "bg-paper-dim text-ink border border-line"
                 }`}
               >
@@ -250,7 +245,7 @@ export default function ChatHistoryOverlay({
           ))}
         </div>
 
-        {/* Footer */}
+        
         {messages.length > 0 && (
           <div className="flex items-center justify-end gap-3 px-5 py-4 border-t border-line">
             {confirmingClear ? (

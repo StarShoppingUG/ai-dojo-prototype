@@ -13,32 +13,21 @@ export default function AvatarComponents({
   avatarId,
 }: {
   scenario: Scenario;
-  /** The specific character's avatarId picked on the characters screen. */
+  
   avatarId: string;
 }) {
   const instance = `dojo-${scenario.id}-${avatarId}`;
   const appId = APP_ID;
   const settingsGroup = `${scenario.id}-${avatarId}`;
 
-  // Kept only the graphics readiness tracker to handle the blur mask overlay state
+ 
   const [isWidgetReady, setIsWidgetReady] = useState(false);
   const [loadFailed, setLoadFailed] = useState(false);
-  // Bumped to force a full remount of the avatar-model subtree on retry —
-  // see the `key` on the shellRef wrapper below. This state (isWidgetReady,
-  // loadFailed) lives in this component, one level above that key, so it
-  // has to be reset explicitly each time retryKey changes; a remount alone
-  // wouldn't touch it.
+
   const [retryKey, setRetryKey] = useState(0);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const shellRef = useRef<HTMLDivElement | null>(null);
 
-  // Load the AI Avatar Team's Web Component bundle once, then nudge it.
-  // Routed through the shared loadAvatarScript() singleton (lib/useAvatarScript.ts)
-  // instead of creating/checking the <script> tag independently here. This
-  // component used to have its own copy of this logic, which raced against
-  // useAvatarProfile.ts's copy on the character-select page after a reload —
-  // whichever one ran second could attach its "load" listener after the tag
-  // had already finished loading and never resolve. See HANDOFF3.md.
   useEffect(() => {
     let cancelled = false;
     function nudgeResize() {
@@ -54,16 +43,8 @@ export default function AvatarComponents({
         // eslint-disable-next-line no-console
         console.error("[AvatarComponents] failed to load avatar script:", error);
       });
-
-    // Catches the mobile toolbar-settle race independent of avatar
-    // script load timing — forces next/image to re-evaluate `sizes`
-    // and the dvh-based containers to re-measure against the real
-    // viewport shortly after first paint.
-    const settleTimer = setTimeout(nudgeResize, 600);
-
     return () => {
       cancelled = true;
-      clearTimeout(settleTimer);
     };
   }, []);
 
@@ -99,12 +80,7 @@ export default function AvatarComponents({
       }
     };
 
-    // Emitted by AvatarController.init() when loadAvatar() genuinely
-    // failed, instead of the old unconditional app:ready — see
-    // HANDOFF notes: app:ready used to fire regardless of load success,
-    // which hid this overlay onto a blank/broken canvas on a slow or
-    // failed load. Now a failure gets its own signal, and this overlay
-    // stays up (swapped to a retry state) instead of disappearing early.
+
     const onLoadError = (e: Event) => {
       const detail = (e as CustomEvent).detail;
       if (!detail?.instance || detail.instance === instance) {
@@ -159,22 +135,24 @@ export default function AvatarComponents({
         }}
       />
 
-      <Image
-        src={scenario.backgroundImage}
-        alt=""
-        fill
-        priority
-        quality={90}
-        sizes="100vw"
-        className="fixed inset-0 -z-20 h-dvh object-cover object-bottom"
-      />
-      <div className="fixed inset-0 -z-10 h-dvh bg-black/25" />
 
-      <div className="fixed inset-0 z-0 h-dvh flex flex-col overflow-hidden">
+      <div className="fixed inset-0 -z-20" style={{ height: "100dvh" }}>
+        <Image
+          src={scenario.backgroundImage}
+          alt=""
+          fill
+          priority
+          quality={90}
+
+          sizes="(max-width: 768px) 150vw, 100vw"
+          className="object-cover object-bottom"
+        />
+      </div>
+      <div className="fixed inset-0 -z-10 bg-black/25" style={{ height: "100dvh" }} />
+
+      <div className="fixed inset-0 z-0 flex flex-col overflow-hidden" style={{ height: "100dvh" }}>
         <div className="flex-1 min-h-0 flex relative">
-          {/* Overlay stays visible until the model reports ready OR a
-              distinct failure state, instead of unconditionally
-              disappearing once init() merely finishes running. */}
+
           <div
             className={`absolute inset-0 z-40 flex flex-col items-center justify-center bg-zinc-950/80 backdrop-blur-xl transition-opacity duration-500 ease-out ${
               isWidgetReady ? "opacity-0 pointer-events-none" : "opacity-100"

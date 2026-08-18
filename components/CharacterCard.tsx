@@ -127,7 +127,7 @@ const isSyncingData =
         className="block no-underline text-inherit px-5 pt-5 pb-4 transition-colors duration-150 ease-out hover:bg-paper-dim/20 dark:hover:bg-white/5"
       >
         <div className="flex items-center gap-4 mb-3.5">
-          <div className="relative w-18 h-18 rounded-full overflow-hidden bg-paper-dim ring-2 ring-line dark:ring-zinc-800 ring-offset-4 ring-offset-white dark:ring-offset-paper-dim flex shrink-0 items-center justify-center shadow-inner transition-all duration-200">
+          <div className="relative w-18 h-18 rounded-full overflow-hidden bg-paper-dim ring-2 ring-line dark:ring-zinc-600 ring-offset-4 ring-offset-white dark:ring-offset-paper-dim flex shrink-0 items-center justify-center shadow-inner transition-all duration-200">
             {isSyncingData ? (
               <div className="absolute inset-0 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-full" />
             ) : profile?.thumbnail ? (

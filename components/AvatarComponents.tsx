@@ -148,7 +148,7 @@ export default function AvatarComponents({
           className="object-cover object-bottom"
         />
       </div>
-      <div className="fixed inset-0 -z-10 bg-black/25" style={{ height: "100dvh" }} />
+      <div className="fixed inset-0 -z-10 bg-black/30" style={{ height: "100dvh" }} />
 
       <div className="fixed inset-0 z-0 flex flex-col overflow-hidden" style={{ height: "100dvh" }}>
         <div className="flex-1 min-h-0 flex relative">

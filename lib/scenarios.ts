@@ -1,14 +1,7 @@
 export type ScenarioCharacterSlot = {
-  // The avatarId this character should map to in the AI Avatar Team's
-  // roster (AvatarSources.js). GUESSED, same caveat as the old
-  // NEXT_PUBLIC_DOJO_AVATAR_ID default in config.ts — needs confirming
-  // against a real `avatar:available-avatars` event payload. If the id
-  // doesn't match anything in the live roster, the characters page will
-  // simply fail to find/render this slot (see lib/avatarRoster.ts).
   avatarId: string;
-  // Fallback label shown on the character card ONLY if the roster event
-  // doesn't give us a name for this avatarId. Not sent to the backend.
   fallbackLabel: string;
+  language?: "en" | "ja" | "bilingual";
 };
 
 export type Scenario = {
@@ -18,11 +11,10 @@ export type Scenario = {
   level: "Beginner" | "Intermediate" | "Advanced";
   description: string;
   backgroundImage: string;
-  characters: [
-    ScenarioCharacterSlot,
-    ScenarioCharacterSlot,
-    ScenarioCharacterSlot,
-  ];
+  characters:
+    | [ScenarioCharacterSlot, ScenarioCharacterSlot]
+    | [ScenarioCharacterSlot, ScenarioCharacterSlot, ScenarioCharacterSlot]
+    | [ScenarioCharacterSlot, ScenarioCharacterSlot, ScenarioCharacterSlot, ScenarioCharacterSlot];
 };
 
 export const SCENARIOS: Scenario[] = [
@@ -110,20 +102,7 @@ export const SCENARIOS: Scenario[] = [
       { avatarId: "airport_shuttle_driver", fallbackLabel: "Shuttle Driver" },
     ],
   },
-  {
-    id: "friend-disagreement",
-    title: "Talking through a disagreement with a friend",
-    titleJa: "友人との意見の食い違いを話し合う",
-    level: "Advanced",
-    description:
-      "Practice bringing up something that's been bothering you, listening to your friend's side, and working things out together.",
-    backgroundImage: "/scenarios/disagreement.webp",
-    characters: [
-      { avatarId: "friend_close", fallbackLabel: "Close Friend" },
-      { avatarId: "friend_roommate", fallbackLabel: "Roommate" },
-      { avatarId: "friend_coworker", fallbackLabel: "Coworker Friend" },
-    ],
-  },
+ 
   {
     id: "billing-dispute",
     title: "Talking to customer service about a mistake",
@@ -155,6 +134,22 @@ export const SCENARIOS: Scenario[] = [
       { avatarId: "stranger_line_waiter", fallbackLabel: "Person in Line" },
     ],
   },
+   {
+    id: "language-coaching",
+    title: "Learning a language with a coach",
+    titleJa: "コーチと学ぶ語学",
+    level: "Advanced",
+    description:
+      "Pick a coach and practice either Japanese or English through real conversation — they naturally mix both languages as they teach, so you pick up real words and phrases instead of memorizing drills.",
+    backgroundImage: "/scenarios/language.webp",
+    characters: [
+      { avatarId: "afro_lady", fallbackLabel: "Amara — English Coach", language: "en" },
+      { avatarId: "formal_white_male", fallbackLabel: "Ethan — English Coach", language: "en" },
+      { avatarId: "yellow_dress_lady", fallbackLabel: "Emi — Japanese Coach", language: "ja" },
+      { avatarId: "casual_white_male", fallbackLabel: "Ren — Japanese Coach", language: "ja" }
+    ],
+  }
+
 ];
 
 export function getScenario(id: string): Scenario | undefined {

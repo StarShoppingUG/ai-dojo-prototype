@@ -11,6 +11,7 @@ type CharacterCardProps = {
   fallbackLabel: string;
   persona?: string;
   cardIndex: number;
+  language?: "en" | "ja" | "bilingual";
 };
 
 export default function CharacterCard({
@@ -19,6 +20,7 @@ export default function CharacterCard({
   fallbackLabel,
   persona,
   cardIndex,
+  language,
 }: CharacterCardProps) {
   const instance = `dojo-${scenarioId}-${avatarId}`;
   const appId = APP_ID;
@@ -87,25 +89,32 @@ const isSyncingData =
     };
   }, [instance]);
 
-  const languages = [
-    {
+  const LANGUAGE_STYLES = {
+    en: {
       label: "English",
       styles:
         "text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-800/60",
     },
-    {
+    ja: {
       label: "Japanese",
       styles:
         "text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-950/40 border-red-200 dark:border-red-800/60",
     },
-    {
+    bilingual: {
       label: "ENG + JP Bilingual",
       styles:
         "text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/40 border-purple-200 dark:border-purple-800/60",
     },
-  ];
+  } as const;
 
-  const lang = languages[cardIndex] || languages[2];
+  // Prefer the explicit `language` prop (driven by which language this
+  // avatar actually teaches/speaks) — only fall back to the old
+  // position-based guess for scenarios that haven't been given an
+  // explicit language per character yet.
+  const positionFallback = ["en", "ja", "bilingual"] as const;
+  const lang =
+    LANGUAGE_STYLES[language as keyof typeof LANGUAGE_STYLES] ||
+    LANGUAGE_STYLES[positionFallback[cardIndex] || "bilingual"];
 
   return (
     <div className="relative bg-white dark:bg-paper-dim border border-line rounded-card overflow-hidden flex flex-col transition-all duration-200 ease-out hover:border-ai-indigo hover:-translate-y-1 hover:shadow-xl hover:shadow-ai-indigo-deep/5 dark:hover:shadow-black/40">

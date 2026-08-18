@@ -35,6 +35,7 @@ export default function CharactersScreen({ scenario }: { scenario: Scenario }) {
     scenarioId={scenario.id}
     avatarId={c.avatarId}
     fallbackLabel={c.fallbackLabel}
+    language={c.language}
     cardIndex={index} // Passed the raw numeric index variable here
   />
 ))}

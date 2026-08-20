@@ -12,6 +12,7 @@ type CharacterCardProps = {
   persona?: string;
   cardIndex: number;
   language?: "en" | "ja" | "bilingual";
+  teaches?: "en" | "ja";
 };
 
 export default function CharacterCard({
@@ -21,6 +22,7 @@ export default function CharacterCard({
   persona,
   cardIndex,
   language,
+  teaches,
 }: CharacterCardProps) {
   const instance = `dojo-${scenarioId}-${avatarId}`;
   const appId = APP_ID;
@@ -107,6 +109,19 @@ const isSyncingData =
     },
   } as const;
 
+  const TEACHES_STYLES = {
+    en: {
+      label: "Teaches English",
+      styles:
+        "text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800/60",
+    },
+    ja: {
+      label: "Teaches Japanese",
+      styles:
+        "text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-800/60",
+    },
+  } as const;
+
   // Prefer the explicit `language` prop (driven by which language this
   // avatar actually teaches/speaks) — only fall back to the old
   // position-based guess for scenarios that haven't been given an
@@ -168,11 +183,20 @@ const isSyncingData =
                   {displayName}
                 </h3>
 
-                <span
-                  className={`inline-block text-[10px] font-extrabold tracking-wider uppercase border rounded-full px-2 py-0.5 transition-colors ${lang.styles}`}
-                >
-                  {lang.label}
-                </span>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span
+                    className={`inline-block text-[10px] font-extrabold tracking-wider uppercase border rounded-full px-2 py-0.5 transition-colors ${lang.styles}`}
+                  >
+                    {lang.label}
+                  </span>
+                  {teaches && (
+                    <span
+                      className={`inline-block text-[10px] font-extrabold tracking-wider uppercase border rounded-full px-2 py-0.5 transition-colors ${TEACHES_STYLES[teaches].styles}`}
+                    >
+                      {TEACHES_STYLES[teaches].label}
+                    </span>
+                  )}
+                </div>
               </>
             )}
           </div>

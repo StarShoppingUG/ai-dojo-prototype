@@ -12,6 +12,8 @@ export default function HomePage() {
         return "text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-800/60";
       case "advanced":
         return "text-rose-700 dark:text-rose-300 bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-800/60";
+      case "adaptive":
+        return "text-violet-700 dark:text-violet-300 bg-violet-50 dark:bg-violet-950/40 border-violet-200 dark:border-violet-800/60";
       default:
         return "text-ink-soft border-line bg-paper-dim/40";
     }

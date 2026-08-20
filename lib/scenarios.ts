@@ -1,14 +1,15 @@
 export type ScenarioCharacterSlot = {
   avatarId: string;
   fallbackLabel: string;
-  language?: "en" | "ja" | "bilingual";
+  language?: "en" | "ja" | "bilingual"; // language the conversation is conducted in
+  teaches?: "en" | "ja";                 // target language being coached (coaching scenarios only)
 };
 
 export type Scenario = {
   id: string;
   title: string;
   titleJa: string;
-  level: "Beginner" | "Intermediate" | "Advanced";
+  level: "Beginner" | "Intermediate" | "Advanced" | "Adaptive";
   description: string;
   backgroundImage: string;
   characters:
@@ -138,15 +139,15 @@ export const SCENARIOS: Scenario[] = [
     id: "language-coaching",
     title: "Learning a language with a coach",
     titleJa: "コーチと学ぶ語学",
-    level: "Advanced",
+    level: "Adaptive",
     description:
       "Pick a coach and practice either Japanese or English through real conversation — they naturally mix both languages as they teach, so you pick up real words and phrases instead of memorizing drills.",
     backgroundImage: "/scenarios/language.webp",
     characters: [
-      { avatarId: "afro_lady", fallbackLabel: "Amara — English Coach", language: "en" },
-      { avatarId: "formal_white_male", fallbackLabel: "Ethan — English Coach", language: "en" },
-      { avatarId: "yellow_dress_lady", fallbackLabel: "Emi — Japanese Coach", language: "ja" },
-      { avatarId: "casual_white_male", fallbackLabel: "Ren — Japanese Coach", language: "ja" }
+      { avatarId: "afro_lady", fallbackLabel: "Amara — English Coach", language: "bilingual", teaches: "en" },
+      { avatarId: "formal_white_male", fallbackLabel: "Ethan — English Coach", language: "bilingual", teaches: "en" },
+      { avatarId: "yellow_dress_lady", fallbackLabel: "Emi — Japanese Coach", language: "bilingual", teaches: "ja" },
+      { avatarId: "casual_white_male", fallbackLabel: "Ren — Japanese Coach", language: "bilingual", teaches: "ja" }
     ],
   }
 

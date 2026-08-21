@@ -274,7 +274,7 @@ export default function AvatarComponents({
                   className="group flex h-10 w-10 items-center justify-center rounded-full bg-[#efe8d8] border border-[#d9d0ba] text-[#4a5164] hover:bg-[#223a5e] hover:border-[#223a5e] hover:text-[#f7f3ea] active:scale-95 transition-all duration-150 ease-out cursor-pointer"
                 >
                   <svg
-                    className="w-5 h-5 fill-none stroke-current stroke-[2]"
+                    className="w-5 h-5 fill-none stroke-current stroke-2"
                     viewBox="0 0 24 24"
                   >
                     <path

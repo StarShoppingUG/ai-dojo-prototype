@@ -141,7 +141,7 @@ export const SCENARIOS: Scenario[] = [
     titleJa: "コーチと学ぶ語学",
     level: "Adaptive",
     description:
-      "Pick a coach and practice either Japanese or English through real conversation — they naturally mix both languages as they teach, so you pick up real words and phrases instead of memorizing drills.",
+      "Pick a coach and practice either Japanese or English through real conversation — they naturally mix both languages as they teach and adapt to your level as you go, so you pick up real words and phrases instead of memorizing drills.",
     backgroundImage: "/scenarios/language.webp",
     characters: [
       { avatarId: "afro_lady", fallbackLabel: "Amara — English Coach", language: "bilingual", teaches: "en" },

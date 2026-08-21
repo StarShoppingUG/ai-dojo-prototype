@@ -13,7 +13,7 @@ export default function HomePage() {
       case "advanced":
         return "text-rose-700 dark:text-rose-300 bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-800/60";
       case "adaptive":
-        return "text-violet-700 dark:text-violet-300 bg-violet-50 dark:bg-violet-950/40 border-violet-200 dark:border-violet-800/60";
+        return "text-white border-transparent bg-[length:200%_auto] animate-[gradient_3s_ease_infinite] bg-gradient-to-r from-cyan-500 via-violet-500 to-fuchsia-500";
       default:
         return "text-ink-soft border-line bg-paper-dim/40";
     }
@@ -41,10 +41,16 @@ export default function HomePage() {
                 href={`/practice/${s.id}`}
                 className="block no-underline text-inherit bg-white dark:bg-paper-dim border border-line rounded-card px-5 pt-5 pb-[18px] transition-all duration-200 ease-out hover:border-ai-indigo hover:bg-paper-dim/20 hover:-translate-y-1 hover:shadow-xl hover:shadow-ai-indigo-deep/5 dark:hover:shadow-black/40"
               >
-                {/* CHANGED: Replaced the static hanko-red code block with our dynamic style injector */}
-                <span className={`inline-block text-[11px] font-bold tracking-[0.08em] uppercase border rounded-full px-2.5 py-0.5 mb-3 transition-colors ${getLevelStyles(s.level)}`}>
-                  {s.level}
-                </span>
+                {s.level.toLowerCase() === "adaptive" ? (
+                  <span className="relative inline-flex items-center overflow-hidden text-[11px] font-bold tracking-[0.08em] uppercase rounded-full px-2.5 py-0.5 mb-3 text-white bg-gradient-to-r from-emerald-500 via-amber-500 to-rose-500">
+                    <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent animate-shimmer" />
+                    <span className="relative">{s.level}</span>
+                  </span>
+                ) : (
+                  <span className={`inline-block text-[11px] font-bold tracking-[0.08em] uppercase border rounded-full px-2.5 py-0.5 mb-3 transition-colors ${getLevelStyles(s.level)}`}>
+                    {s.level}
+                  </span>
+                )}
                 
                 <p className="font-display text-[15px] text-ink-soft mb-0.5 transition-colors">
                   {s.titleJa}

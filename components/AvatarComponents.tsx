@@ -28,6 +28,20 @@ export default function AvatarComponents({
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const shellRef = useRef<HTMLDivElement | null>(null);
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Phone-only — avatar-scale and avatar-vertical-offset
+    const mq = window.matchMedia("(max-width: 640px)");
+    setIsMobile(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  const avatarScale = isMobile ? "0.75" : "1";
+  const avatarVerticalOffset = isMobile ? "-0.6" : "-1.25";
+
   useEffect(() => {
     let cancelled = false;
     function nudgeResize() {
@@ -144,7 +158,11 @@ export default function AvatarComponents({
           priority
           quality={90}
 
-          sizes="(max-width: 768px) 150vw, 100vw"
+          // object-cover on a tall mobile viewport scales the image based on
+          // height, not width — the effective rendered width is much bigger
+          // than the viewport itself, so this needs to be well over 100vw or
+          // the browser fetches a candidate that's too small and looks soft.
+          sizes="(max-width: 768px) 220vw, 100vw"
           className="object-cover object-bottom"
         />
       </div>
@@ -238,8 +256,8 @@ export default function AvatarComponents({
                 settings-scope="app"
                 settings-group={settingsGroup}
                 instance={instance}
-                avatar-scale="1"
-                avatar-vertical-offset="-1.25"
+                avatar-scale={avatarScale}
+                avatar-vertical-offset={avatarVerticalOffset}
                 className="h-full"
               />
 

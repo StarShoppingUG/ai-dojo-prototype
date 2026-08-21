@@ -28,19 +28,6 @@ export default function AvatarComponents({
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const shellRef = useRef<HTMLDivElement | null>(null);
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    // Phone-only — avatar-scale and avatar-vertical-offset
-    const mq = window.matchMedia("(max-width: 640px)");
-    setIsMobile(mq.matches);
-    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
-
-  const avatarScale = isMobile ? "0.75" : "1";
-  const avatarVerticalOffset = isMobile ? "-0.6" : "-1.25";
 
   useEffect(() => {
     let cancelled = false;
@@ -256,8 +243,10 @@ export default function AvatarComponents({
                 settings-scope="app"
                 settings-group={settingsGroup}
                 instance={instance}
-                avatar-scale={avatarScale}
-                avatar-vertical-offset={avatarVerticalOffset}
+                avatar-scale="1"
+                avatar-vertical-offset="-1.25"
+                avatar-scale-mobile="0.70"
+                avatar-vertical-offset-mobile="-0.4"
                 className="h-full"
               />
 
